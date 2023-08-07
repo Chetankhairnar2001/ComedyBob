@@ -1,0 +1,12 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap');
+
+.font-comic-sans {
+  font-family: 'Comic Neue', cursive;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
