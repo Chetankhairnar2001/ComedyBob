@@ -1,6 +1,6 @@
 import openai
 
-openai.api_key = "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"
+openai.api_key = ""
 
 
 def initialize_chatbot(system_msg, example_jokes):
