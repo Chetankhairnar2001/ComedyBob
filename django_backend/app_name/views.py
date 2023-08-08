@@ -1,5 +1,8 @@
 import json
 from django.shortcuts import redirect, render
+from gtts import gTTS
+from io import BytesIO
+import pygame
 
 # Create your views here.
 
@@ -87,6 +90,28 @@ def summarize_view(request):
 		# 	return Response("Failed", status=200)
 		
 		summary = summarize(text, type)
+		
+		summary_len = len(summary); time=0
+		if summary_len<=60:
+			time = 4500
+		elif summary_len<=110:
+			time = 6500
+		else:
+			time = 9500
+		pygame.init()
+		text = summary
+		# Create a gTTS object
+		tts = gTTS(text, lang='en')
+		# Save the speech to a BytesIO object
+		audio_stream = BytesIO()
+		tts.write_to_fp(audio_stream)
+		# Play the speech using pygame
+		audio_stream.seek(0)
+		pygame.mixer.init()
+		pygame.mixer.music.load(audio_stream)
+		pygame.mixer.music.play()
+		pygame.time.delay(time)  # Delay for 5 seconds
+		pygame.event.wait()
 
 		#save joke to database
 		new_addition = UserData.objects.get(username=request.user.username)
