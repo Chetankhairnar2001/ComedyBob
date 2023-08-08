@@ -2,10 +2,8 @@ from django.db import models
 
 # Create your models here.
 
-from django.db import models
-
-class Text(models.Model):
-	text = models.CharField(max_length = 500, blank = False)
-	#type = models.CharField(max_length=200, blank=False)
+class UserData(models.Model):
+	username=models.CharField(max_length = 500, blank=False)
+	saved_joke_list = models.TextField(null=True) # JSON-serialized version of list
 	time_sent = models.DateTimeField(auto_now_add = True) 
 	

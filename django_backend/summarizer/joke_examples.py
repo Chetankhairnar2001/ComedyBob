@@ -1,37 +1,86 @@
-import openai
+#Question Answer:
+["", ""],
+q_and_a_examples = [
+    ["atom", "Why don't scientists trust atoms? Because they make up everything."],
+    ["spaghetti", "What do you call fake spaghetti? An impasta."],
+    ["farm, potatoes, corn", "Why do we never tell secrets on a farm? Because the potatoes have eyes and the corn has ears."],
+    ["skeletons", "Why don't skeletons fight each other? They don't have the guts."],
+    ["oysters, shellfish", "Why don't oysters donate to charity? Because they are shellfish."],
+    ["Matt", "What do you call a person who is outside a door and has no arms nor legs? Matt."],
+    ["Star Trek", "Which Star Trek character is a member of the magic circle? Jean-Luc Pickacard."],
 
-openai.api_key = ""
+]
 
+# to be organized
+{'role': 'user', 'content': "What's the difference between a bullet and a human? "},
+{'role': 'assistant', 'content': "A bullet doesn't miss Harambe"}, 
+{'role': 'user', 'content': 'Why was the Ethiopian baby crying? .'}, 
+{'role': 'assistant', 'content': "He was having a mid-life crisis."}, 
+{'role': 'user', 'content': "What's the difference between a corn husker with epilepsy and a hooker with dysentery? "},
+{'role': 'assistant', 'content': "One shucks between fits..."}, 
+{'role': 'user', 'content': "Who is 2016's biggest sellout? "}, 
+{'role': 'assistant', 'content': "Kevin Durant or Bernie Sanders?"}, 
+{'role': 'user', 'content': "Why is little Annie's shoe floating in the sea? "}, 
+{'role': 'assistant', 'content': " Because the shark burped. "}, {'role': 'user', 'content': 'Why are there so many blood cells in female prisons?'}, 
+{'role': 'assistant', 'content': "Because the sentences usually end with periods."}, 
+{'role': 'user', 'content': 'What do you call a russian tree? Dimitree.'}, 
+{'role': 'assistant', 'content': "Dimitree"}, 
+{'role': 'user', 'content': 'How do you call it when an egg is on point? '}, 
+{'role': 'assistant', 'content': "Egg zactly!"}, 
+{'role': 'user', 'content': "Where'd the dog who lost his tail go to get a new one? "}, 
+{'role': 'assistant', 'content': "A retail store."},
+{'role': 'user', 'content': "Did you hear about the oyster who went to the ball?"}, 
+{'role': 'assistant', 'content': 'He pulled a muscle'},
+{'role': 'user', 'content': 'Why did the hipster burn his tongue?'}, {'role': 'assistant', 'content': 'Because he drank his coffee before it was cool.'}, 
+{'role': 'user', 'content': 'Why did Mozart kill his chickens?'}, {'role': 'assistant', 'content': "They were yelling 'Bach Bach Bach Bach'"}, {'role': 'user', 'content': "What is a pirate's worst nightmare?"}, {'role': 'assistant', 'content': 'A sunken chest with no booty.'}, 
+{'role': 'user', 'content': "Why can't you e-mail a photo to a Jedi?"}, {'role': 'assistant', 'content': 'Because attachments are forbidden.'}, 
+{'role': 'user', 'content': 'What will happen if you went inside a black hole?'}, {'role': 'assistant', 'content': "I don't know either. It must be out-of-this-world."}, {'role': 'user', 'content': 'Which came first, the Chicken or the Egg?'}, 
+{'role': 'assistant', 'content': 'The Rooster'}, {'role': 'user', 'content': "What's common between a good boyfriend and a lion?"}, {'role': 'assistant', 'content': "They're both ready to eat you"}, 
+{'role': 'user', 'content': 'Who put semen in the basement?'}, {'role': 'assistant', 'content': "I don't know. That's just the way it's spelled."}, {'role': 'user', 'content': 'What do you do when your wife starts smoking?'}, 
+{'role': 'assistant', 'content': 'Slow down and apply lube'}, {'role': 'user', 'content': 'Want to hear a joke about UDP?'}, {'role': 'assistant', 'content': "Never mind. you won't get it, and I won't care"}, 
+{'role': 'user', 'content': 'What species are the best rappers?'}, {'role': 'assistant', 'content': "Dragons, because they're always spittin' fire."}, {'role': 'user', 'content': 'What does Santa say to the elves after they make the toys?'}, 
+{'role': 'assistant', 'content': 'Leave my presents'}, 
+{'role': 'user', 'content': "Do you like fish sticks? "}, {'role': 'assistant', 'content': "Well then, you're a gay fish."}, 
+{'role': 'user', 'content': "What did the 2 rednecks say after breaking up? "}, {'role': 'assistant', 'content': "Let's just be cousins."}, 
+{'role': 'user', 'content': "What's the difference between a pizza and a Jew? The Pizza doesn't scream when I put it in the oven."}, 
+{'role': 'assistant', 'content': "You are a sassy joke teller. Please tell me a funny joke about 'pizza', 'Jew', or 'oven'."}, 
+{'role': 'user', 'content': "Why does Santa have three gardens? Q: Why does Santa have three gardens? A: So he can 'hoe, hoe, hoe.'"}, {
+'role': 'assistant', 'content': "You are a sassy joke teller. Please tell me a funny joke about 'Santa' or 'gardens'."}, {'role': 'user', 'content': 'Did you hear about the Native American man that drank 200 cups of tea?'}, 
+{'role': 'assistant', 'content': 'He nearly drowned in his own tea pee.'}, {'role': 'user', 'content': "What's the best anti-diarrheal prescription?"}, {'role': 'assistant', 'content': 'Mycheexarphlexin'}, 
+{'role': 'assistant', 'content': "You are a sassy joke teller. Please tell me a funny joke about 'corn husker', 'epilepsy', or 'hooker'."},
 
-def initialize_chatbot(system_msg, example_jokes):
-    messages = [{"role": "system", "content": system_msg}]
-    for joke in example_jokes:
-        messages.append(joke)
-    return messages
+{"role": "user", "content": "My wife said I should do lunges to stay in shape"},
+{
+    "role": "assistant",
+    "content": "My wife said I should do lunges to stay in shape. That would be a big step forward.",
+},
+{"role": "user", "content": "How does dry skin affect you at work?"},
+{
+    "role": "assistant",
+    "content": "You don’t have any elbow grease to put into it.",
+},
+{"role": "user", "content": "How do you get a squirrel to like you?"},
+{
+    "role": "assistant",
+    "content": "Act like a nut.",
+},
+{"role": "user", "content": "Why don't eggs tell jokes?"},
+{
+    "role": "assistant",
+    "content": "Why don't eggs tell jokes? They'd crack each other up.",
+},
+{"role": "user", "content": "Did you hear the rumor about butter?"},
+{
+    "role": "assistant",
+    "content": "Did you hear the rumor about butter? Well, I'm not going to spread it!",
+},
+{"role": "user", "content": "What did the vet say to the cat?"},
+{
+    "role": "assistant",
+    "content": "What did the vet say to the cat?" "How are you feline?",
+},
 
-
-def get_user_input():
-    user_input = input("-> ")
-    return user_input
-
-
-def generate_response(messages, user_input):
-    messages.append({"role": "user", "content": user_input})
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo-16k", 
-        messages=messages, 
-        temperature=0.6, 
-        max_tokens=75
-    )
-    reply = response["choices"][0]["message"]["content"]
-    messages.append({"role": "assistant", "content": reply})
-    # print(response['usage']['total_tokens'])
-    return reply
-
-
-def main():
-    system_msg = "You are a funny and sassy joke assistant and a reddit troller, so user will ask u set of question you need to answer them or if user write incomplete joke comlete them example the knock knock and ... jokes"
-    example_jokes = [
+example_jokes = [
         {'role': 'user', 'content': "Why don't scientists trust atoms? Because they make up everything."}, 
         {'role': 'assistant', 'content': "You are a sassy joke teller. Please tell me a funny joke about 'scientists' or 'atoms'."}, 
         {'role': 'user', 'content': 'What do you call fake spaghetti? An impasta.'}, {'role': 'assistant', 'content': "You are a sassy joke teller. Please tell me a funny joke about 'noodles' or 'fake food'."}, {'role': 'user', 'content': 'Why do we never tell secrets on a farm? Because the potatoes have eyes and the corn has ears.'}, {'role': 'assistant', 'content': "You are a sassy joke teller. Please tell me a funny joke about 'farms', 'potatoes', or 'corn'."},
@@ -223,18 +272,3 @@ def main():
         },
         {"role": "assistant", "content": "He’s hit rock bottom."},
     ]
-
-    messages = initialize_chatbot(system_msg, example_jokes)
-
-    print("Say hello to the new Joke Generator")
-    while True:
-        user_input = get_user_input()
-        if user_input.lower() == "quit":
-            break
-        reply = generate_response(messages, user_input)
-        print("\n" + reply + "\n")
-    return
-
-
-if __name__ == "__main__":
-    main()
