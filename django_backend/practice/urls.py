@@ -23,5 +23,6 @@ urlpatterns = [
     path("summary/", summarize_view),
     path("registration/", registration2),
     path("signin/", sign_in2),
+    path("signout/", sign_out),
     path("savedjokes/", get_saved_jokes),
 ]

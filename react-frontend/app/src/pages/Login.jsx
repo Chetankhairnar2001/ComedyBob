@@ -1,13 +1,13 @@
 import { useRef, useState, useEffect, useContext } from 'react';
-import AuthContext from "./context/AuthProvider";
+import AuthContext from "../context/AuthProvider";
 
-import axios from './api/axios';
+import "./login.css"
 
 import { API_URL } from "../settings";
-const LOGIN_URL = API_URL + '/signin/';
+const LOGIN_URL ='/signin/';
 
 const Login = () => {
-    const { setAuth } = useContext(AuthContext);
+    const setAuth = useContext(AuthContext);
     const userRef = useRef();
     const errRef = useRef();
 
@@ -28,24 +28,35 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post(LOGIN_URL,
-                JSON.stringify({ user, pwd }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
-            );
-            console.log(JSON.stringify(response?.data));
-            //console.log(JSON.stringify(response));
-            const accessToken = response?.data?.accessToken;
-            const roles = response?.data?.roles;
-            setAuth({ user, pwd, roles, accessToken });
+            const url = API_URL + '/signin/';
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Access-Control-Allow-Credentials': 'true',
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify(
+                    {
+                        username: user,
+                        password: pwd
+                    }
+                )
+            };
+            
+            //stores sessionid cookie automatically
+            fetch(url, options).then(res => res.json());
+
             setUser('');
             setPwd('');
             setSuccess(true);
+
+            //add redirect 
+
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
+                console.log(err)
             } else if (err.response?.status === 400) {
                 setErrMsg('Missing Username or Password');
             } else if (err.response?.status === 401) {
@@ -68,13 +79,15 @@ const Login = () => {
                     </p>
                 </section>
             ) : (
-                <section>
+                <div className="min-h-screen bg-gradient-to-r from-amber-500 to-yellow-300 flex justify-center items-center flex-col">
+                <section className="signinsection body html">
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1>Sign In</h1>
-                    <form onSubmit={handleSubmit}>
+                    <form className="form textarea" onSubmit={handleSubmit}>
                         <label htmlFor="username">Username:</label>
                         <input
                             type="text"
+
                             id="username"
                             ref={userRef}
                             autoComplete="off"
@@ -91,16 +104,17 @@ const Login = () => {
                             value={pwd}
                             required
                         />
-                        <button>Sign In</button>
+                        <button className='button font-bold text-2xl text-yellow-400'>Sign In</button>
                     </form>
                     <p>
                         Need an Account?<br />
-                        <span className="line">
+                        <span className="line font-bold text-2xl text-yellow-400">
                             {/*put router link here*/}
-                            <a href="#">Sign Up</a>
+                            <a href="">Sign Up</a>
                         </span>
                     </p>
                 </section>
+                </div>
             )}
         </>
     )

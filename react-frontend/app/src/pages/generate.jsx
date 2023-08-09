@@ -1,14 +1,19 @@
 import { useState } from "react";
 import { API_URL } from "../settings";
 import Title from "../assets/Title.png";
+import Cookies from "js-cookie";
 
 const getJoke = (prompt, type) => {
     const url = API_URL + '/summary/';
+    
     const options = {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Access-Control-Allow-Credentials': 'true',
+            'Content-Type': 'application/json',
+            'X-CSRFToken':Cookies.get('csrftoken'),
         },
+        credentials: 'include',
         body: JSON.stringify(
             {
                 text: prompt,
@@ -29,7 +34,8 @@ function Generate() {
         getJoke(prompt, type).then(result => {
             setResult(result);
         }).catch(error => {
-            setResult(error.message);
+            console.log(error)
+            setResult("Error: Check browser console for details");
         });
     };
 
