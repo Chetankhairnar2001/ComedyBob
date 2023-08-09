@@ -48,7 +48,7 @@ def summarize(text, type):
 	if type == "Knock Knock":
 		prompt = knockknock.n_shot_prompt(text, amount_of_examples=5)
 	elif type == "Q and A":
-		prompt = q_and_a.n_shot_prompt(text, amount_of_examples=7)
+		prompt = q_and_a.n_shot_prompt(text, amount_of_examples=3)
 	elif type == "Completion":
 		prompt = completion_prompt(text)
 

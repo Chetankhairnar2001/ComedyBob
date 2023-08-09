@@ -7,6 +7,12 @@ import "./login.css"
 import { API_URL } from "../settings";
 const LOGIN_URL ='/signin/';
 
+function refreshPage(){ 
+    
+    window.location.reload(); 
+    window.location.href = "/generate"
+}
+
 const Login = () => {
     //const setAuth = useContext(AuthContext);
     const userRef = useRef();
@@ -63,8 +69,6 @@ const Login = () => {
                 setSuccess(true);
             }
 
-            
-
             //add redirect 
 
         } catch (err) {
@@ -91,7 +95,7 @@ const Login = () => {
                     <section className='body html signinsection'>
                         <h1>You are logged in!</h1>
                         <br></br>
-                        <Link href="/generate" className="font-bold text-2xl inline-block mr-20 text-yellow-400 hover:text-amber-500">
+                        <Link href="/generate" onClick={refreshPage} className="font-bold text-2xl inline-block mr-20 text-yellow-400 hover:text-amber-500">
                             Let's make some jokes!
                         </Link>
                     </section>

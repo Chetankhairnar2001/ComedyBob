@@ -58,6 +58,7 @@ def sign_in2(request):
 		
 	username = request.data.get('username', None)
 	password = request.data.get('password', None)
+	#print(username, password)
 	user = authenticate(request, username=username, password=password)
 	if user is not None:
 		login(request, user)
@@ -140,6 +141,13 @@ def get_saved_jokes(request):
 	new_addition = UserData.objects.get(username=request.user.username)
 	decoded_list = json.loads(new_addition.saved_joke_list)
 	return Response(data=decoded_list, status=200)
+
+@api_view(["GET"])
+def get_username(request):
+	if not request.user.is_authenticated:
+		return Response(data="Please log in", status=403)
+	return Response(data=request.user.username, status=200)
+
 
 
 #put ranking stuff here

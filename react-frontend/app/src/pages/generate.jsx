@@ -54,8 +54,11 @@ function Generate() {
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
-          onSubmit();
-        
+            if (type == 'Type') {
+                setResult("Uh oh! You forgot to choose the type of joke you wanted!")
+            } else {
+                onSubmit();
+            }
         }
       };
 
@@ -66,6 +69,7 @@ function Generate() {
     } else {
         dropdownAdjustment = "mt-3"
     }
+
 
     let input_placeholder = ""
 
