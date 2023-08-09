@@ -22,6 +22,14 @@ knockknock = JokeType(
 		["Tank", "Knock, Knock. Who’s there? Tank. Tank who? You’re welcome."],
 		["Luke, Peep hole", "Knock, Knock. Who’s there? Luke. Luke who? Luke through the peep hole and find out."],
 		["Figs", "Knock, Knock. Who’s there? Figs. Figs who? Figs the doorbell, it’s not working!"],
+		["Hal","Knock, knock. Who’s there? Hal.Hal who? Hal will you know if you don’t open the door?"],
+		["Honey bee", "Knock, knock. Who’s there? Honey bee. Honey bee who? Honey bee a dear and get that for me please!"],
+		["Snow", "Knock, knock. Who’s there? Snow. Snow who? Snow use. The joke is over."],
+		["Water", "Knock, knock. Who’s there? Water. Water who? Water you doing telling jokes right now? Don’t you have things to do?"],
+		["Needle", "Knock, knock. Who’s there? Needle.Needle who? Needle little help right now!"],
+		["Dwayne", "Knock, knock. Who’s there? Dwayne.Dwayne who? Dwayne the sink. I need to use it!"],
+		["Europe", "Knock, knock. Who’s there?Europe. Europe who? No I’m not!"],
+		["Ice cream", "Knock, knock. Who’s there? Ice cream. Ice cream who? Ice cream if you don’t give me some candy!"],
 	]
 )
 
@@ -38,9 +46,9 @@ q_and_a = JokeType(
 def summarize(text, type):
 
 	if type == "Knock Knock":
-		prompt = knockknock.n_shot_prompt(text, amount_of_examples=0)
+		prompt = knockknock.n_shot_prompt(text, amount_of_examples=5)
 	elif type == "Q and A":
-		prompt = q_and_a.n_shot_prompt(text, amount_of_examples=2)
+		prompt = q_and_a.n_shot_prompt(text, amount_of_examples=7)
 	elif type == "Completion":
 		prompt = completion_prompt(text)
 

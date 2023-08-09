@@ -28,7 +28,3 @@
     3. Model
         1. LLM and OpenAI models
         2. Use models in Langchain to take in text and produce an output
-    
-    ### **Workflow**
-    
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1773db9f-ede0-4968-9a70-3252ff961710/Untitled.png)
