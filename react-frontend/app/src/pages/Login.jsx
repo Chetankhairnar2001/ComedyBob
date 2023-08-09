@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect, useContext } from 'react';
-import AuthContext from "../context/AuthProvider";
 
 import "./login.css"
 
@@ -7,7 +6,7 @@ import { API_URL } from "../settings";
 const LOGIN_URL ='/signin/';
 
 const Login = () => {
-    const setAuth = useContext(AuthContext);
+    //const setAuth = useContext(AuthContext);
     const userRef = useRef();
     const errRef = useRef();
 
