@@ -18,6 +18,8 @@ from django.utils import timezone
 
 from django.contrib.auth.models import User
 
+TTS_ACTIVATED = False
+
 @api_view(["POST"])
 def registration2(request):
 	username = request.data.get("username", None)
@@ -29,7 +31,7 @@ def registration2(request):
 	try:
 		user = User.objects.create_user(username=username, password=password)
 	except:
-		return Response(data="Try a different username", status=200)
+		return Response(data="Try a different username", status=409)
         
 	
 	if user is not None:
@@ -59,9 +61,9 @@ def sign_in2(request):
 	user = authenticate(request, username=username, password=password)
 	if user is not None:
 		login(request, user)
-		return Response(status=200)
+		return Response(data="", status=200)
 	else:
-		return Response(data="Invalid login",status=200)
+		return Response(data="Invalid login",status=406)
 
 
 # Sign out controller method.
@@ -78,7 +80,7 @@ def sign_out(request):
 @api_view(["POST"])
 def summarize_view(request):
 	if not request.user.is_authenticated:
-		return Response(data="Please log in", status=400)
+		return Response(data="Please log in!", status=403)
 	# handle data inputs
 	if request.method == "POST":
 		
@@ -98,27 +100,28 @@ def summarize_view(request):
 		
 		summary = summarize(text, type)
 		
-		summary_len = len(summary); time=0
-		if summary_len<=60:
-			time = 4500
-		elif summary_len<=110:
-			time = 6500
-		else:
-			time = 9500
-		pygame.init()
-		text = summary
-		# Create a gTTS object
-		tts = gTTS(text, lang='en')
-		# Save the speech to a BytesIO object
-		audio_stream = BytesIO()
-		tts.write_to_fp(audio_stream)
-		# Play the speech using pygame
-		audio_stream.seek(0)
-		pygame.mixer.init()
-		pygame.mixer.music.load(audio_stream)
-		pygame.mixer.music.play()
-		pygame.time.delay(time)  # Delay for 5 seconds
-		pygame.event.wait()
+		if TTS_ACTIVATED:
+			summary_len = len(summary); time=0
+			if summary_len<=60:
+				time = 4500
+			elif summary_len<=110:
+				time = 6500
+			else:
+				time = 9500
+			pygame.init()
+			text = summary
+			# Create a gTTS object
+			tts = gTTS(text, lang='en')
+			# Save the speech to a BytesIO object
+			audio_stream = BytesIO()
+			tts.write_to_fp(audio_stream)
+			# Play the speech using pygame
+			audio_stream.seek(0)
+			pygame.mixer.init()
+			pygame.mixer.music.load(audio_stream)
+			pygame.mixer.music.play()
+			pygame.time.delay(time)  # Delay for 5 seconds
+			pygame.event.wait()
 
 		#save joke to database
 		new_addition = UserData.objects.get(username=request.user.username)

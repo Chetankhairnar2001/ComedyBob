@@ -10,6 +10,8 @@
     "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "axios": "^1.4.0",
     "js-cookie": "^3.0.5",
     "react": "^18.2.0",

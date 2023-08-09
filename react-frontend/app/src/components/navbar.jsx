@@ -12,14 +12,14 @@ function Navbar() {
                 </div>
              </div>
              <div>
-                <Link href="/" className="font-bold text-2xl inline-block mr-20 text-yellow-400 hover:text-amber-500">
+                <Link href="/Home" className="text-2xl inline-block mr-20 hover:text-yellow-400">
                     Home
                 </Link>
-                <Link href="/about" className="text-2xl inline-block mr-20 hover:text-yellow-400">
-                    About
+                <Link href="/generate" className="font-bold text-2xl inline-block mr-20 text-yellow-400 hover:text-amber-500">
+                    Generate
                 </Link>
-                <Link href="/about" className="text-2xl inline-block mr-20 hover:text-yellow-400">
-                    Meet the Team
+                <Link href="/signin" className="text-2xl inline-block mr-20 hover:text-yellow-400">
+                    Signin
                 </Link>
                 <Link href="/summarize" className="text-2xl inline-block hover:text-yellow-400">
                     Saved Jokes

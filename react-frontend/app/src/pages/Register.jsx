@@ -1,7 +1,12 @@
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-//import axios from './api/axios';
+import Cookies from "js-cookie";
+
+import { API_URL } from "../settings";
+
+import "./login.css";
+import { Link } from "wouter";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -53,15 +58,36 @@ const Register = () => {
             return;
         }
         try {
-            const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ user, pwd }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
-            );
+            // const response = await axios.post(REGISTER_URL,
+            //     JSON.stringify({ user, pwd }),
+            //     {
+            //         headers: { 'Content-Type': 'application/json' },
+            //         withCredentials: true
+            //     }
+            // );
+
+            const url = API_URL + '/registration/';
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Access-Control-Allow-Credentials': 'true',
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken':Cookies.get('csrftoken')
+                },
+                credentials: 'include',
+                body: JSON.stringify(
+                    {
+                        username: user,
+                        password: pwd
+                    }
+                )
+            };
+            
+            //stores sessionid cookie automatically
+            fetch(url, options).then(res => res.json())
+
             // TODO: remove console.logs before deployment
-            console.log(JSON.stringify(response?.data));
+            //console.log(JSON.stringify(response?.data));
             //console.log(JSON.stringify(response))
             setSuccess(true);
             //clear state and controlled inputs
@@ -70,6 +96,7 @@ const Register = () => {
             setMatchPwd('');
         } catch (err) {
             if (!err?.response) {
+                console.log(err)
                 setErrMsg('No Server Response');
             } else if (err.response?.status === 409) {
                 setErrMsg('Username Taken');
@@ -83,17 +110,20 @@ const Register = () => {
     return (
         <>
             {success ? (
-                <section>
-                    <h1>Success!</h1>
-                    <p>
-                        <a href="#">Sign In</a>
-                    </p>
-                </section>
+                <div className="min-h-screen bg-gradient-to-r from-amber-500 to-yellow-300 flex justify-center items-center flex-col">
+                    <section className="body html signinsection">
+                        <h1>Success!</h1>
+                        <Link href="/generate" className="font-bold text-2xl inline-block mr-20 text-yellow-400 hover:text-amber-500">
+                            Let's make some jokes!
+                        </Link>
+                    </section>
+                </div>
             ) : (
-                <section>
+                <div className="min-h-screen bg-gradient-to-r from-amber-500 to-yellow-300 flex justify-center items-center flex-col">
+                <section className="body html signinsection">
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1>Register</h1>
-                    <form onSubmit={handleSubmit}>
+                    <form className="form textarea" onSubmit={handleSubmit}>
                         <label htmlFor="username">
                             Username:
                             <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} />
@@ -165,16 +195,20 @@ const Register = () => {
                             Must match the first password input field.
                         </p>
 
-                        <button disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
+                        <button className="button font-bold text-2xl text-yellow-400 hover:text-amber-500" disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
                     </form>
                     <p>
                         Already registered?<br />
-                        <span className="line">
+                        <span className="line font-bold text-2xl text-yellow-400">
                             {/*router link*/}
-                            <a href="#">Sign In</a>
+                            {/* <a href="#">Sign In</a> */}
+                            <Link href="/signin" className="font-bold text-2xl inline-block mr-20 text-yellow-400 hover:text-amber-500">
+                                Sign In
+                            </Link>
                         </span>
                     </p>
                 </section>
+                </div>
             )}
         </>
     )
