@@ -24,7 +24,7 @@ function Navbar() {
                 <Link href="/signin" className="text-2xl inline-block mr-20 hover:text-yellow-400">
                     Signin
                 </Link>
-                <Link href="/summarize" className="text-2xl inline-block hover:text-yellow-400">
+                <Link href="/saved_joke" className="text-2xl inline-block hover:text-yellow-400">
                     Saved Jokes
                 </Link>
              </div>
