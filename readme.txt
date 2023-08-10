@@ -15,14 +15,12 @@
 4. Tech Stack
     1. Front End:
         1. Node.js
-        2. VS Code
-        3. Django
-        4. JavaScript
-        5. CSS
-        6. HTML
-        7. ESLint
-        8. Vite
-        9. Tailwind
+        2. JavaScript
+        3. CSS
+        4. HTML
+        5. ESLint
+        6. Vite
+        7. Tailwind
     2. Backend:
         1. Django
     3. Model

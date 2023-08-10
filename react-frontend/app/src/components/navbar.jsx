@@ -15,6 +15,9 @@ function Navbar() {
                 <Link href="/Home" className="text-2xl inline-block mr-20 hover:text-yellow-400">
                     Home
                 </Link>
+                <Link href="/teams" className="text-2xl inline-block mr-20 hover:text-yellow-400">
+                    Meet the Team
+                </Link>
                 <Link href="/generate" className="font-bold text-2xl inline-block mr-20 text-yellow-400 hover:text-amber-500">
                     Generate
                 </Link>

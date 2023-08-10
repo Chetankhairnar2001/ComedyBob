@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import SignOut from './pages/signout';
 import Register from './pages/Register';
 import Home from './pages/home';
+import teams from './pages/teams';
 
 function App () {
     return (
@@ -15,6 +16,7 @@ function App () {
             <Switch>
                 <Route path='/generate' component={Generate} />
                 <Route path='/about' component={About} />
+                <Route path='/teams' component={teams} />
                 <Route path='/signin' component={Login} />
                 <Route path='/signout' component={SignOut} />
                 <Route path='/register' component={Register} />
