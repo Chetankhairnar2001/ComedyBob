@@ -39,8 +39,7 @@ const teams = () => {
               Vincent - Full Stack Developer
             </h5>
             <p className="mb-4 text-base text-neutral-600 dark:text-neutral-200">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
+              I'm Vincent. I wrote the prompt building, ranking and storage backend code, some of the backend API and most of the frontend.
             </p>
           </div>
         </div>
@@ -58,8 +57,7 @@ const teams = () => {
             Fan Bob - Backend Developer
             </h5>
             <p className="mb-4 text-base text-neutral-600 dark:text-neutral-200">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
+              This is Bob, an uprising senior in high school. I am the backend developer as well as the machine learning engineer. I also made two videos for presentation! Make sure you check them out. 
             </p>
           </div>
         </div>
@@ -77,8 +75,7 @@ const teams = () => {
               Kris - Backend Developer
             </h5>
             <p className="mb-4 text-base text-neutral-600 dark:text-neutral-200">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
+              I'm Kris, I'm a senior in high school, and I plan to major in mechanical engineering and computer science.
             </p>
           </div>
         </div>

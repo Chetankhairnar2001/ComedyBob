@@ -93,12 +93,21 @@ const Register = () => {
             };
             
             //stores sessionid cookie automatically
-            fetch(url, options).then(res => res.json())
+            fetch(url, options).then(res => {
+                if (res.status == 409) {
+                    setErrMsg('Username Taken');
+                    setSuccess(false);
+                    //errRef.current.focus();
+                } else {
+                    setSuccess(true);
+                }
+                res.json()
+            })
 
             // TODO: remove console.logs before deployment
             //console.log(JSON.stringify(response?.data));
             //console.log(JSON.stringify(response))
-            setSuccess(true);
+            
             //clear state and controlled inputs
             setUser('');
             setPwd('');
