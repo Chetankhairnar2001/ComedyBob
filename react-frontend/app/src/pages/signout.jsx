@@ -1,5 +1,7 @@
 import { API_URL } from "../settings";
 import Cookies from "js-cookie";
+import "../Index.css"
+import { Link } from "wouter";
 
 const SignOut = () => {
     const url = API_URL + '/signout/';
@@ -11,12 +13,6 @@ const SignOut = () => {
             'X-CSRFToken':Cookies.get('csrftoken')
         },
         credentials: 'include',
-        // body: JSON.stringify(
-        //     {
-        //         username: user,
-        //         password: pwd
-        //     }
-        // )
     };
     
     fetch(url, options).then(res => res.json()
@@ -26,7 +22,15 @@ const SignOut = () => {
     });
 
     return (
-        <p>Signed Out</p>
+        <div className="min-h-screen bg-gradient-to-r from-amber-500 to-yellow-300 flex justify-center items-center flex-col">
+            <section className='body html signinsection'>
+                <h1>Signed Out</h1>
+                <br></br>
+                <Link href="/signin" className="font-bold text-2xl inline-block mr-20 text-yellow-400 hover:text-amber-500">
+                    Sign In
+                </Link>
+            </section>
+        </div>
     )
 }
 

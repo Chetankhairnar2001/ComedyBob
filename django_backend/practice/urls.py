@@ -20,10 +20,12 @@ from app_name.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("summary/", summarize_view),
+    path("generate/", generate_joke_api),
     path("registration/", registration2),
     path("signin/", sign_in2),
     path("signout/", sign_out),
     path("savedjokes/", get_saved_jokes),
     path("getusername/", get_username),
+    path("rankprompt/", rank_prompt),
+    path("getrankings/", get_rankings),
 ]

@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import "./login.css"
 
 import { API_URL } from "../settings";
+import Loading from '../components/loading';
 const LOGIN_URL ='/signin/';
 
 function refreshPage(){ 
@@ -23,6 +24,8 @@ const Login = () => {
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
 
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         userRef.current.focus();
     }, [])
@@ -32,6 +35,7 @@ const Login = () => {
     }, [user, pwd])
 
     const handleSubmit = async (e) => {
+        setLoading(true)
         e.preventDefault();
 
         try {
@@ -67,6 +71,7 @@ const Login = () => {
                 setUser('');
                 setPwd('');
                 setSuccess(true);
+                
             }
 
             //add redirect 
@@ -86,10 +91,17 @@ const Login = () => {
             }
             errRef.current.focus();
         }
+        setLoading(false)
     }
 
     return (
         <>
+        {loading ? (
+            <div className="min-h-screen bg-gradient-to-r from-amber-500 to-yellow-300 flex justify-center items-center flex-col">
+                <Loading></Loading>
+            </div>
+        ) : (
+            <>
             {success ? (
                 <div className="min-h-screen bg-gradient-to-r from-amber-500 to-yellow-300 flex justify-center items-center flex-col">
                     <section className='body html signinsection'>
@@ -140,6 +152,8 @@ const Login = () => {
                     </p>
                 </section>
                 </div>
+            )}
+            </>
             )}
         </>
     )

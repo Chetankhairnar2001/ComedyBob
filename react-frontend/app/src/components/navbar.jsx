@@ -65,6 +65,9 @@ function Navbar() {
                 <Link href="/" className="text-2xl inline-block mr-20 hover:text-yellow-400">
                     Home
                 </Link>
+                <Link href="/teams" className="text-2xl inline-block mr-20 hover:text-yellow-400">
+                    Meet the Team
+                </Link>
                 <Link href="/generate" className="font-bold text-2xl inline-block mr-20 text-yellow-400 hover:text-amber-500">
                     Generate
                 </Link>
@@ -74,7 +77,7 @@ function Navbar() {
                             Sign Out
                         </Link>
                         
-                        <Link href="/summarize" className="text-2xl inline-block hover:text-yellow-400 mr-20">
+                        <Link href="/saved_joke" className="text-2xl inline-block hover:text-yellow-400 mr-20">
                             Saved Jokes
                         </Link>
                         <Link className="text-3xl inline-block font-comic-sans text-amber-500" href="">{username}</Link>

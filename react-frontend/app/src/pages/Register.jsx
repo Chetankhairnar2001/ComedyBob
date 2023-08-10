@@ -12,6 +12,12 @@ const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const REGISTER_URL = '/register';
 
+function refreshPage(){ 
+    
+    window.location.reload(); 
+    window.location.href = "/generate"
+}
+
 const Register = () => {
     const userRef = useRef();
     const errRef = useRef();
@@ -31,6 +37,8 @@ const Register = () => {
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
 
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         userRef.current.focus();
     }, [])
@@ -49,6 +57,7 @@ const Register = () => {
     }, [user, pwd, matchPwd])
 
     const handleSubmit = async (e) => {
+        setLoading(true)
         e.preventDefault();
         // if button enabled with JS hack
         const v1 = USER_REGEX.test(user);
@@ -105,15 +114,22 @@ const Register = () => {
             }
             errRef.current.focus();
         }
+        setLoading(false)
     }
 
     return (
         <>
+        {loading ? (
+            <div className="min-h-screen bg-gradient-to-r from-amber-500 to-yellow-300 flex justify-center items-center flex-col">
+                <Loading></Loading>
+            </div>
+        ) : (
+            <>
             {success ? (
                 <div className="min-h-screen bg-gradient-to-r from-amber-500 to-yellow-300 flex justify-center items-center flex-col">
                     <section className="body html signinsection">
                         <h1>Success!</h1>
-                        <Link href="/generate" className="font-bold text-2xl inline-block mr-20 text-yellow-400 hover:text-amber-500">
+                        <Link href="/generate" onClick={refreshPage} className="font-bold text-2xl inline-block mr-20 text-yellow-400 hover:text-amber-500">
                             Let's make some jokes!
                         </Link>
                     </section>
@@ -210,6 +226,7 @@ const Register = () => {
                 </section>
                 </div>
             )}
+        </>)} 
         </>
     )
 }

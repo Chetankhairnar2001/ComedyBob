@@ -3,9 +3,10 @@ import { API_URL } from "../settings";
 import Title from "../assets/Title.png";
 import Cookies from "js-cookie";
 import { Redirect } from "wouter";
+import Loading from "../components/loading";
 
 const getJoke = (prompt, type) => {
-    const url = API_URL + '/summary/';
+    const url = API_URL + '/generate/';
     
     const options = {
         method: 'POST',
@@ -23,41 +24,121 @@ const getJoke = (prompt, type) => {
         )
     };
 
-   
+    
 
-    return fetch(url, options).then(res => res.json())
+   
+    //make five requests
+    return [
+        fetch(url, options).then(res => res.json()),
+        fetch(url, options).then(res => res.json()),
+        fetch(url, options).then(res => res.json()),
+        fetch(url, options).then(res => res.json()),
+        fetch(url, options).then(res => res.json()),
+
+    ]
     
 }
+
+const rankPrompt = (prompt_ids) => {
+    const url = API_URL + '/rankprompt/';
+    
+    const options = {
+        method: 'POST',
+        headers: {
+            'Access-Control-Allow-Credentials': 'true',
+            'Content-Type': 'application/json',
+            'X-CSRFToken':Cookies.get('csrftoken'),
+        },
+        credentials: 'include',
+        body: JSON.stringify(
+            {
+                prompt_ids: prompt_ids
+            }
+        )
+    };
+
+    
+
+   
+    //make five requests
+    fetch(url, options).then(res => res.json())
+}
+
+
 
 function Generate() {
 
     const [prompt, setPrompt] = useState('');
-    const [result, setResult] = useState('...');
+
+    //store list of results
+    const [result, setResult] = useState([]);
+
     const [login, setLogin] = useState(false);
+
+    const [loading, setLoading] = useState(false);
 
     const [type, setType] = useState('Type');
 
-    const onSubmit = () => {
-        getJoke(prompt, type).then(result => {
-            if (result == "Please log in!") {
-                setLogin(true)
-            } else {
-                setLogin(false)
-            }
-            console.log(result)
-            setResult(result);
-        }).catch(error => {
-            console.log(error)
-            setResult("Error: Check browser console for details");
-        });
+    const onSubmit = async () => {
+        
+        
+        let list = getJoke(prompt, type)
+        console.log(list)
+        
+        //reponse is the index
+        let joke_list = []
+        for (var response in list) {
+            //console.log(list[response])
+            let response_tuple = await list[response].catch(error => {
+                console.log(error)
+                setLoading(false)
+                setResult(["Error: Check browser console for details"]);
+                
+            });
+            joke_list.push(response_tuple)
+            // list[response].then(response_tuple => {
+            //     if (response_tuple == "Please log in!") {
+            //         setLogin(true)
+            //     } else {
+            //         joke_list.push(response_tuple.joke)
+            //         // let temp_result = result
+            //         // temp_result.push(response_tuple.joke)
+            //         // console.log(temp_result)
+            //         // setResult(temp_result)
+                    
+            //     }
+            // }).catch(error => {
+            //     console.log(error)
+            //     setLoading(false)
+            //     setResult(["Error: Check browser console for details"]);
+                
+            // });
+            
+            //console.log(result)
+        }
+        
+        
+        console.log(result)
+        
+        
+        return joke_list
     };
+    
 
-    const handleKeyDown = (event) => {
+    const handleKeyDown = async (event) => {
         if (event.key === 'Enter') {
             if (type == 'Type') {
-                setResult("Uh oh! You forgot to choose the type of joke you wanted!")
+                setResult(["Uh oh! You forgot to choose the type of joke you wanted!"])
             } else {
-                onSubmit();
+                setResult([])
+                setLoading(true)
+                let list = await onSubmit()
+                
+                setResult(list.map((t, index) => 
+                    <div className="card bg-green-400 rounded mt-3" onClick={() => (rankPrompt(t.ids))}  key={index}>{t.joke}</div>
+                ))
+                
+                setLoading(false)
             }
         }
       };
@@ -170,13 +251,19 @@ function Generate() {
                                 </foreignObject>
                             </svg>
                         </div>
+                        {loading ? (
+                            <Loading></Loading>
+                        ) : (
+                            <>
+                                <h1 className="text-2xl mb-3 font-bold mt-40">
+                                    Result
+                                </h1>
+                                <div className="p-2 bg-slate-200 rounded">
+                                    {result}
+                                </div>
+                            </>
+                        )}
                         
-                        <h1 className="text-2xl mb-3 font-bold mt-40">
-                            Result
-                        </h1>
-                        <p className="p-2 bg-slate-200 rounded">
-                            {result}
-                        </p>
                     </div>
                 
                 </div>

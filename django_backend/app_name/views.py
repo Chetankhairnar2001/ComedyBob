@@ -9,9 +9,9 @@ import pygame
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .models import UserData
+from .models import UserData, PromptRankingList
 
-from summarizer.summarizer import * 
+from generator.joke_generator import * 
 
 from django.contrib.auth import login, logout, authenticate
 from django.utils import timezone
@@ -19,6 +19,8 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 TTS_ACTIVATED = False
+
+
 
 @api_view(["POST"])
 def registration2(request):
@@ -79,7 +81,7 @@ def sign_out(request):
 
 # says that this function can do handle POST requests
 @api_view(["POST"])
-def summarize_view(request):
+def generate_joke_api(request):
 	if not request.user.is_authenticated:
 		return Response(data="Please log in!", status=403)
 	# handle data inputs
@@ -99,18 +101,18 @@ def summarize_view(request):
 		# except:
 		# 	return Response("Failed", status=200)
 		
-		summary = summarize(text, type)
+		joke, ids = generate_joke(text, type)
 		
 		if TTS_ACTIVATED:
-			summary_len = len(summary); time=0
-			if summary_len<=60:
+			joke_len = len(joke); time=0
+			if joke_len<=60:
 				time = 4500
-			elif summary_len<=110:
+			elif joke_len<=110:
 				time = 6500
 			else:
 				time = 9500
 			pygame.init()
-			text = summary
+			text = joke
 			# Create a gTTS object
 			tts = gTTS(text, lang='en')
 			# Save the speech to a BytesIO object
@@ -127,12 +129,18 @@ def summarize_view(request):
 		#save joke to database
 		new_addition = UserData.objects.get(username=request.user.username)
 		decoded_list = json.loads(new_addition.saved_joke_list)
-		decoded_list.append(summary)
+		decoded_list.append(joke)
 		new_addition.saved_joke_list = json.dumps(decoded_list)
 		new_addition.save()
 
+
+
 		# return answer & status 200 (meaning everything worked!) 
-		return Response(summary, status=200)
+		return Response(data=
+		  {
+			"joke": joke, 
+			"ids": ids 
+			}, status=200)
 
 @api_view(["GET"])
 def get_saved_jokes(request):
@@ -149,5 +157,33 @@ def get_username(request):
 	return Response(data=request.user.username, status=200)
 
 
+@api_view(["POST"])
+def rank_prompt(request):
+	if not request.user.is_authenticated:
+		return Response(data="Please log in", status=403)
+	
+	prompt_ids = request.data.get("prompt_ids")
 
-#put ranking stuff here
+	try:
+		prompt_rankings_object = PromptRankingList.objects.get(list_id=2)
+	except:
+		prompt_rankings_object = PromptRankingList(list_id=2)
+		prompt_rankings_object.save()
+
+
+	decoded_dict = json.loads(prompt_rankings_object.prompt_rankings)
+	if prompt_ids in decoded_dict:
+		decoded_dict[prompt_ids] = decoded_dict.get(prompt_ids)+1
+	else:
+		decoded_dict[prompt_ids] = 1
+
+	prompt_rankings_object.prompt_rankings = json.dumps(decoded_dict)
+	print(prompt_rankings_object.prompt_rankings)
+	prompt_rankings_object.save()
+
+	return Response(data="", status=200)
+
+@api_view(["GET"])
+def get_rankings(request):
+	prompt_rankings_object = PromptRankingList.objects.get(list_id=2)
+	return Response(data=prompt_rankings_object.prompt_rankings, status=200)
