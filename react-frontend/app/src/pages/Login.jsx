@@ -66,7 +66,7 @@ const Login = () => {
                 
                 setErrMsg('Invalid Login');
                 setSuccess(false);
-                errRef.current.focus();
+                //errRef.current.focus();
             } else {
                 setUser('');
                 setPwd('');
@@ -89,7 +89,7 @@ const Login = () => {
             } else {
                 setErrMsg('Login Failed');
             }
-            errRef.current.focus();
+            //errRef.current.focus();
         }
         setLoading(false)
     }

@@ -166,7 +166,7 @@ function Generate() {
     
                 <div className="min-h-screen bg-gradient-to-r from-amber-500 to-yellow-300 flex justify-center items-center flex-col">
                     
-                    <div className="flex justify-center items-center">
+                    <div className="flex justify-center items-center mt-10">
                         <img className="" src={Title} width="500"/>
                     </div>
                     <div className="h-[40px]"></div>
